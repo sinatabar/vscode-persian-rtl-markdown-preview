@@ -7,11 +7,11 @@ test("Persian-only block is RTL", () => {
 });
 
 test("English-leading mixed block is RTL", () => {
-  assert.equal(directionFor("Evidence ledger: هر ادعا باید منبع داشته باشد."), "rtl");
+  assert.equal(directionFor("preview-block: این بند برای آزمایش افزونه است."), "rtl");
 });
 
 test("identifier-leading mixed list item is RTL", () => {
-  assert.equal(directionFor("run-case: اجرای فرایند از ابتدا تا انتها."), "rtl");
+  assert.equal(directionFor("preview-item: بررسی جهت یک گزینهٔ ترکیبی."), "rtl");
 });
 
 test("English-only block remains LTR", () => {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+
+- Separate Persian and English Marketplace details to prevent bidirectional layout issues.
+- Replace mixed-language examples with neutral preview-related wording.
+
 ## 1.0.1
 
 - Bundle the variable Noto Sans Arabic font for consistent Persian and mixed-language rendering.

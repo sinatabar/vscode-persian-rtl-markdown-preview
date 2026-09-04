@@ -2,11 +2,11 @@
 
 این پاراگراف فارسی است و عبارت `inline code` باید خوانا بماند.
 
-- run-case: اجرای فرایند از ابتدا تا انتها.
-- Evidence ledger: هر ادعا باید منبع داشته باشد.
+- preview-item: بررسی جهت یک گزینهٔ ترکیبی.
+- font-check: بررسی بارگذاری قلم همراه افزونه.
 - This item is entirely in English.
 
-> API response باید در این نقل‌قول از راست خوانده شود.
+> preview-quote: این نقل‌قول ترکیبی باید از راست خوانده شود.
 
 ```js
 const direction = "ltr";
