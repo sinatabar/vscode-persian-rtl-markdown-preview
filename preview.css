@@ -1,0 +1,182 @@
+:root {
+  --persian-font: "Noto Sans Arabic", "Noto Sans", "Vazirmatn", "Geeza Pro", Tahoma, sans-serif;
+}
+
+body.vscode-light {
+  --persian-text: #1f2328;
+  --persian-heading: #0d1117;
+  --persian-muted: #59636e;
+  --persian-accent: #0969da;
+  --persian-border: #d1d9e0;
+  --persian-soft-bg: #f6f8fa;
+  --persian-mark-bg: #fff8c5;
+}
+
+body.vscode-dark {
+  --persian-text: #e6edf3;
+  --persian-heading: #f0f6fc;
+  --persian-muted: #b1bac4;
+  --persian-accent: #58a6ff;
+  --persian-border: #30363d;
+  --persian-soft-bg: #161b22;
+  --persian-mark-bg: #6e5a00;
+}
+
+body.vscode-high-contrast,
+body.vscode-high-contrast-light {
+  --persian-text: var(--vscode-editor-foreground);
+  --persian-heading: var(--vscode-editor-foreground);
+  --persian-muted: var(--vscode-editor-foreground);
+  --persian-accent: var(--vscode-textLink-foreground);
+  --persian-border: var(--vscode-contrastBorder);
+  --persian-soft-bg: var(--vscode-textCodeBlock-background);
+  --persian-mark-bg: var(--vscode-editor-findMatchBackground);
+}
+
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 240px;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 48px 72px;
+  line-height: 1.9;
+  color: var(--persian-text, var(--vscode-editor-foreground));
+  font-feature-settings: "kern" 1;
+  text-rendering: optimizeLegibility;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  color: var(--persian-heading, var(--vscode-editor-foreground));
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body hr {
+  border-color: var(--persian-border, var(--vscode-widget-border));
+}
+
+.markdown-body a {
+  color: var(--persian-accent, var(--vscode-textLink-foreground));
+  text-underline-offset: 0.2em;
+}
+
+.markdown-body strong {
+  color: var(--persian-heading, var(--vscode-editor-foreground));
+  font-weight: 700;
+}
+
+.markdown-body li::marker {
+  color: var(--persian-accent, var(--vscode-textLink-foreground));
+}
+
+.markdown-body blockquote {
+  color: var(--persian-muted, var(--vscode-descriptionForeground));
+  background: var(--persian-soft-bg, var(--vscode-textBlockQuote-background));
+  border-color: var(--persian-border, var(--vscode-textBlockQuote-border));
+  padding-top: 0.35em;
+  padding-bottom: 0.35em;
+}
+
+.markdown-body :not(pre) > code,
+.markdown-body kbd {
+  color: var(--persian-heading, var(--vscode-textPreformat-foreground));
+  background: var(--persian-soft-bg, var(--vscode-textPreformat-background));
+  border: 1px solid var(--persian-border, var(--vscode-widget-border));
+  border-radius: 5px;
+  padding: 0.12em 0.38em;
+}
+
+.markdown-body pre {
+  background: var(--persian-soft-bg, var(--vscode-textCodeBlock-background));
+  border-color: var(--persian-border, var(--vscode-widget-border));
+  border-radius: 7px;
+}
+
+.markdown-body table {
+  display: table;
+  width: 100%;
+  border: 1px solid var(--persian-border, var(--vscode-widget-border));
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.markdown-body th {
+  color: var(--persian-heading, var(--vscode-editor-foreground));
+  background: var(--persian-soft-bg, var(--vscode-textCodeBlock-background));
+  font-weight: 650;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border-color: var(--persian-border, var(--vscode-widget-border)) !important;
+}
+
+.markdown-body mark {
+  color: var(--persian-heading, inherit);
+  background: var(--persian-mark-bg, #fff8c5);
+  border-radius: 3px;
+  padding: 0 0.2em;
+}
+
+.markdown-body details {
+  margin: 1em 0;
+  padding: 0.7em 1em;
+  border: 1px solid var(--persian-border, var(--vscode-widget-border));
+  border-radius: 7px;
+}
+
+.markdown-body summary {
+  color: var(--persian-heading, var(--vscode-editor-foreground));
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.markdown-body .persian-rtl {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: isolate;
+  font-family: var(--persian-font);
+}
+
+.markdown-body .persian-ltr {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+.markdown-body ul.persian-rtl,
+.markdown-body ol.persian-rtl {
+  padding-right: 2em;
+  padding-left: 0;
+}
+
+.markdown-body blockquote.persian-rtl {
+  border-left: 0;
+  border-right: 0.25em solid var(--vscode-textBlockQuote-border);
+  padding-left: 0;
+  padding-right: 1em;
+}
+
+.markdown-body code:not(pre code) {
+  direction: ltr !important;
+  unicode-bidi: isolate;
+}
+
+.markdown-body pre,
+.markdown-body pre code {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate;
+}
+
+@media (max-width: 700px) {
+  .markdown-body {
+    padding: 24px 18px 48px;
+  }
+}
