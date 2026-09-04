@@ -1,16 +1,16 @@
-# راهنمای جامع محصول | Product Brief
+# آزمایش نمایش Markdown فارسی | Persian Preview Test
 
-این فایل برای بررسی همهٔ حالت‌های رایج Markdown ساخته شده است: متن فارسی، English text، نشانه‌گذاری، جدول، کد و جهت‌های ترکیبی.
+این فایل برای بررسی نمایش تیترها، متن فارسی، English text، فهرست، جدول، کد و جهت‌های ترکیبی در افزونه ساخته شده است.
 
-This paragraph is entirely in English and must stay left-to-right. It also verifies that the extension does not force every block to RTL.
+This paragraph is entirely in English and should remain left-to-right in the Markdown preview.
 
 ## تایپوگرافی و متن ترکیبی
 
-یک متن معمولی با **عبارت پررنگ**، *تأکید ایتالیک*، ~~متن حذف‌شده~~ و [لینک مستندات VS Code](https://code.visualstudio.com/docs/languages/markdown).
+یک متن معمولی با **عبارت پررنگ**، *تأکید ایتالیک*، ~~متن حذف‌شده~~ و [لینک راهنمای Markdown](https://code.visualstudio.com/docs/languages/markdown).
 
-API response باید حتی وقتی جمله با واژهٔ انگلیسی آغاز می‌شود، به‌صورت راست‌به‌چپ و خوانا نمایش داده شود.
+Markdown Preview باید حتی وقتی جمله با واژهٔ انگلیسی آغاز می‌شود، به‌صورت راست‌به‌چپ و خوانا نمایش داده شود.
 
-عبارت `npm run build` داخل متن باید LTR، ایزوله و واضح باقی بماند. برای بازکردن Preview از <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>V</kbd> استفاده کنید.
+عبارت `inline code` داخل متن باید LTR، ایزوله و واضح باقی بماند. برای بازکردن Preview از <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>V</kbd> استفاده کنید.
 
 ### عنوان سطح سه با English keyword
 
@@ -25,15 +25,15 @@ API response باید حتی وقتی جمله با واژهٔ انگلیسی آ
 ## فهرست‌ها
 
 - یک گزینهٔ کاملاً فارسی
-- Evidence ledger: هر ادعا باید منبع، تاریخ و سطح اطمینان داشته باشد.
-- run-interview-case: اجرای سناریو از ابتدا تا انتها با یک شناسهٔ انگلیسی آغاز می‌شود.
+- Mixed text: این گزینه با عبارت انگلیسی آغاز می‌شود و سپس به فارسی ادامه پیدا می‌کند.
+- Noto Sans Arabic: فونت همراه افزونه است و بدون نصب جداگانه بارگذاری می‌شود.
 - This list item is entirely in English.
   - زیرگزینهٔ فارسی با `inline-code`
-  - Nested item: این زیرگزینه هم ترکیبی است.
+  - Nested item: این زیرگزینهٔ ترکیبی نیز باید راست‌به‌چپ باشد.
 
-1. مرحلهٔ اول: جمع‌آوری نیازها
-2. Data model: تعریف موجودیت‌ها و روابط
-3. مرحلهٔ سوم: کنترل کیفیت
+1. بازکردن یک فایل Markdown
+2. Open Preview: اجرای پیش‌نمایش داخلی VS Code
+3. بررسی جهت، فونت و خوانایی متن
 
 - [x] نمایش تیترها و پاراگراف‌ها
 - [x] پشتیبانی از متن English-first و فارسی
@@ -47,30 +47,30 @@ API response باید حتی وقتی جمله با واژهٔ انگلیسی آ
 
 ## جدول داده
 
-| شاخص | مقدار | توضیح |
+| نوع محتوا | جهت | نتیجهٔ مورد انتظار |
 |---|---:|---|
-| نرخ تبدیل | ۲۴٪ | بهتر از baseline ماه قبل |
-| API latency | ۱۸۰ ms | اندازه‌گیری‌شده در محیط تست |
-| English only | 42 | This cell stays readable in LTR |
+| متن فارسی | RTL | خوانا و راست‌چین |
+| Mixed content | RTL | ترکیب درست فارسی و English |
+| English only | LTR | This cell stays readable in LTR |
 
 ## کد
 
 کد کوتاه: `const locale = "fa-IR";`
 
 ```js
-const report = {
+const preview = {
   locale: "fa-IR",
   direction: "rtl",
-  mixedText: "Evidence ledger: هر ادعا باید منبع داشته باشد."
+  bundledFont: "Persian RTL Preview"
 };
 
-console.log(report);
+console.log(preview);
 ```
 
 ```sql
-SELECT user_id, conversion_rate
-FROM analytics.daily_metrics
-WHERE event_date >= DATE '2026-09-01';
+SELECT language, direction
+FROM markdown_preview
+WHERE language IN ('fa', 'en');
 ```
 
 ## جزئیات تکمیلی

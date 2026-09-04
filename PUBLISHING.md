@@ -7,7 +7,7 @@ The public extension name is **Persian RTL Markdown Preview** and its package id
 1. Sign in to [Visual Studio Marketplace management](https://marketplace.visualstudio.com/manage) with a Microsoft account.
 2. Create a publisher. Use `sinatabar` as its ID if available; otherwise update the `publisher` value in `package.json` to the ID you create.
 3. Open the publisher dashboard and choose **New extension → Visual Studio Code**.
-4. Upload `persian-rtl-markdown-preview-1.0.0.vsix` from the latest GitHub release or from this project directory.
+4. Upload the latest `persian-rtl-markdown-preview-<version>.vsix` from the latest GitHub release or from this project directory.
 5. Review the icon, README, repository, license, categories and public visibility, then publish.
 6. Install the Marketplace version in a clean VS Code profile and repeat the demo-file preview check.
 

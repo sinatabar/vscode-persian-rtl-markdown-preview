@@ -2,7 +2,7 @@
   "name": "persian-rtl-markdown-preview",
   "displayName": "Persian RTL Markdown Preview",
   "description": "Correct Persian/Farsi RTL and mixed English-Persian text in VS Code's built-in Markdown Preview.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "sinatabar",
   "author": {
     "name": "Sina Tabar",

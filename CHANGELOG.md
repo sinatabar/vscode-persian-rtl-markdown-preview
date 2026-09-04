@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+- Bundle the variable Noto Sans Arabic font for consistent Persian and mixed-language rendering.
+- Include Arabic and Latin WOFF2 subsets so the preview works offline without a system font installation.
+- Include the SIL Open Font License 1.1 with the packaged font files.
+
 ## 1.0.0
 
 - Add block-aware Persian and Arabic RTL rendering.

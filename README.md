@@ -16,7 +16,7 @@
 
 ## فارسی
 
-این افزونه نمایش داخلی Markdown در VS Code را برای متن فارسی، راست‌به‌چپ و محتوای ترکیبی فارسی–انگلیسی اصلاح می‌کند؛ بدون ویرایش فایل‌های اصلی VS Code و بدون ساختن یک ویرایشگر جداگانه.
+این افزونه نمایش داخلی Markdown در VS Code را برای متن فارسی، راست‌به‌چپ و محتوای ترکیبی فارسی–انگلیسی اصلاح می‌کند؛ بدون ویرایش فایل‌های اصلی VS Code و بدون ساختن یک ویرایشگر جداگانه. فونت Noto Sans Arabic نیز داخل خود افزونه قرار دارد و به نصب فونت جداگانه یا اتصال اینترنت نیاز نیست.
 
 حتی اگر یک سطر با واژه یا شناسهٔ انگلیسی شروع شود، وجود متن فارسی باعث می‌شود کل همان بلوک راست‌به‌چپ و خوانا نمایش داده شود:
 
@@ -38,7 +38,7 @@ API response باید حتی وقتی جمله با واژهٔ انگلیسی آ
 - Correct RTL layout when a mixed sentence begins with English text.
 - LTR isolation for inline code and fenced code blocks.
 - Theme-aware colors for light, dark and high-contrast themes.
-- Prefers Noto Sans Arabic/Noto Sans, with safe system-font fallbacks.
+- Bundles Noto Sans Arabic for consistent offline rendering; no system font installation required.
 - Uses VS Code's official Markdown extension API; no core patching.
 - No settings, telemetry, runtime dependencies or network requests.
 - Works in Restricted Mode.
@@ -78,4 +78,4 @@ Bug reports and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIB
 
 ## License
 
-MIT © [Sina Tabar](https://github.com/sinatabar)
+The extension code is MIT licensed © [Sina Tabar](https://github.com/sinatabar). The bundled Noto Sans Arabic font is distributed under the [SIL Open Font License 1.1](fonts/OFL-1.1.txt).
