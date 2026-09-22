@@ -1,0 +1,154 @@
+:root {
+  color-scheme: light dark;
+  --border: var(--vscode-panel-border, var(--vscode-editorWidget-border));
+  --muted: var(--vscode-descriptionForeground);
+  --surface: var(--vscode-sideBar-background, var(--vscode-editor-background));
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  color: var(--vscode-editor-foreground);
+  background: var(--vscode-editor-background);
+  font-family: PersianEditor, var(--vscode-font-family), sans-serif;
+}
+
+body { display: flex; flex-direction: column; }
+
+.toolbar {
+  min-height: 42px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.tabs { display: flex; gap: 3px; }
+
+button {
+  padding: 5px 11px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--vscode-foreground);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover { background: var(--vscode-toolbar-hoverBackground); }
+button.active {
+  color: var(--vscode-button-foreground);
+  background: var(--vscode-button-background);
+}
+
+#status { color: var(--muted); font-size: 12px; }
+
+.workspace {
+  direction: ltr;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+}
+
+.editor-pane, .preview-pane { min-width: 0; min-height: 0; }
+.editor-pane { border-right: 1px solid var(--border); }
+.mode-edit { grid-template-columns: 1fr; }
+.mode-edit .preview-pane { display: none; }
+.mode-preview { grid-template-columns: 1fr; }
+.mode-preview .editor-pane { display: none; }
+
+#editor {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  outline: none;
+  border: 0;
+  padding: 24px clamp(18px, 4vw, 56px) 80px;
+  color: var(--vscode-editor-foreground);
+  background: var(--vscode-editor-background);
+  font-family: PersianEditor, var(--vscode-editor-font-family), monospace;
+  font-size: var(--vscode-editor-font-size, 14px);
+  line-height: 1.9;
+  text-align: start;
+  unicode-bidi: plaintext;
+  tab-size: 4;
+}
+
+.preview-pane { overflow: auto; background: var(--vscode-editor-background); }
+.preview-content {
+  direction: rtl;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px clamp(20px, 5vw, 64px) 80px;
+  line-height: 1.9;
+}
+
+.preview-content .rtl,
+.preview-content .persian-rtl { direction: rtl; text-align: right; unicode-bidi: isolate; }
+.preview-content .ltr,
+.preview-content .persian-ltr { direction: ltr; text-align: left; unicode-bidi: isolate; }
+.preview-content ul.persian-rtl,
+.preview-content ol.persian-rtl { padding-right: 2em; padding-left: 0; }
+.preview-content pre, .preview-content code, .preview-content time {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font-family: var(--vscode-editor-font-family), monospace;
+}
+.preview-content pre {
+  overflow: auto;
+  padding: 14px;
+  border-radius: 6px;
+  background: var(--vscode-textCodeBlock-background);
+}
+.preview-content blockquote {
+  margin-right: 0;
+  padding-right: 16px;
+  border-right: 3px solid var(--vscode-textBlockQuote-border);
+  color: var(--vscode-textBlockQuote-foreground);
+}
+.preview-content blockquote.persian-ltr {
+  margin-left: 0;
+  padding-left: 16px;
+  padding-right: 0;
+  border-left: 3px solid var(--vscode-textBlockQuote-border);
+  border-right: 0;
+}
+.preview-content table { width: 100%; border-collapse: collapse; }
+.preview-content th, .preview-content td { padding: 6px 10px; border: 1px solid var(--border); }
+.preview-content a { color: var(--vscode-textLink-foreground); }
+.text-line { min-height: 1.9em; white-space: pre-wrap; }
+
+.cue {
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface);
+}
+.cue header {
+  direction: ltr;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 10px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.cue-text { padding: 11px 14px; font-size: 16px; white-space: normal; }
+.empty { color: var(--muted); text-align: center; }
+
+@media (max-width: 720px) {
+  .mode-split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .mode-split .editor-pane { border-right: 0; border-bottom: 1px solid var(--border); }
+  #status { display: none; }
+}

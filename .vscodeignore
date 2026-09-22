@@ -3,6 +3,5 @@
 .github/**
 test/**
 demo/**
-node_modules/**
 PUBLISHING.md
 *.vsix

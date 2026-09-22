@@ -5,7 +5,7 @@
 <h1 align="center">Persian RTL Markdown Preview</h1>
 
 <p align="center">
-  Correct Persian/Farsi RTL and mixed English–Persian text in VS Code's built-in Markdown Preview.
+  Edit and preview Persian/Farsi Markdown, TXT and SRT with correct RTL and mixed-language layout.
 </p>
 
 <p align="center">
@@ -16,19 +16,19 @@
 
 ## فارسی
 
-این افزونه جهت نوشتار و چیدمان پیش‌نمایش داخلی پرونده‌های متنی را برای زبان فارسی اصلاح می‌کند. تیترها، بندها، فهرست‌ها، نقل‌قول‌ها و خانه‌های جدول به‌درستی راست‌به‌چپ می‌شوند.
+این افزونه یک ویرایشگر فارسی برای پرونده‌های نشان‌گذاری، متن ساده و زیرنویس فراهم می‌کند. همچنین جهت نوشتار و چیدمان پیش‌نمایش داخلی را اصلاح می‌کند. تیترها، بندها، فهرست‌ها، نقل‌قول‌ها و خانه‌های جدول به‌درستی راست‌به‌چپ می‌شوند.
 
 متن‌های کاملاً انگلیسی و قطعه‌های کد چپ‌به‌راست باقی می‌مانند. اگر یک بند شامل هر دو زبان باشد، وجود نویسه‌های فارسی باعث می‌شود جهت پایهٔ همان بند راست‌به‌چپ انتخاب شود.
 
-قلم فارسی همراه افزونه است و بدون نصب جداگانه یا اتصال اینترنت بارگذاری می‌شود. این افزونه فقط پیش‌نمایش را تغییر می‌دهد و محتوای پروندهٔ اصلی دست‌نخورده باقی می‌ماند.
+قلم فارسی همراه افزونه است و بدون نصب جداگانه یا اتصال اینترنت بارگذاری می‌شود. ویرایشگر اختصاصی سه حالت ویرایش، پیش‌نمایش و نمایش دوبخشی دارد و تغییرات را مستقیماً در همان پرونده ذخیره می‌کند. در زیرنویس‌ها، زمان‌بندی چپ‌به‌راست و گفت‌وگوهای فارسی راست‌به‌چپ نمایش داده می‌شوند.
 
 ## English
 
-This extension fixes text direction and layout in VS Code's built-in Markdown Preview. Persian blocks are rendered right-to-left, while English-only text and code remain left-to-right.
+This extension adds an optional Persian RTL editor for Markdown, plain-text and SRT subtitle files, while continuing to fix text direction and layout in VS Code's built-in Markdown Preview. Persian blocks are rendered right-to-left, while English-only text and code remain left-to-right.
 
 Mixed-language blocks are detected per block, including paragraphs, headings, lists, blockquotes, and table cells. The bundled Noto Sans Arabic font provides consistent offline rendering without requiring a separate font installation.
 
-The extension changes only the rendered preview. Your Markdown source remains untouched.
+The custom editor supports edit, split and preview modes and saves through VS Code's normal text-document workflow, including Undo/Redo and dirty-file tracking. The original built-in Markdown Preview integration remains available.
 
 ## Preview
 
@@ -38,6 +38,9 @@ The extension changes only the rendered preview. Your Markdown source remains un
 
 ## Features
 
+- Optional Persian RTL Editor for `.md`, `.markdown`, `.txt` and `.srt` files.
+- Edit, split and preview modes with normal VS Code Save and Undo/Redo behavior.
+- Structured SRT preview with LTR timestamps and independently directed subtitle text.
 - Per-block RTL/LTR detection for paragraphs, headings, lists, blockquotes and table cells.
 - Correct RTL layout when a mixed sentence begins with English text.
 - LTR isolation for inline code and fenced code blocks.
@@ -60,11 +63,13 @@ The extension changes only the rendered preview. Your Markdown source remains un
 
 Open any `.md` file and run **Markdown: Open Preview**. The shortcut is `⌘⇧V` on macOS and `Ctrl+Shift+V` on Windows/Linux.
 
-> This extension changes the rendered preview only. The plain-text Markdown editor remains unchanged.
+To edit a Markdown, TXT or SRT file in the custom editor, open the Command Palette and run **Open with Persian RTL Editor**. You can also right-click the editor title and select the same command, or use **Reopen Editor With… → Persian RTL Editor**.
+
+The custom editor is optional. VS Code's standard text editor and built-in Markdown Preview remain available at any time.
 
 ## How it works
 
-The extension inspects each rendered Markdown block. A block containing Persian or Arabic-script characters receives an explicit RTL direction; English-only blocks remain LTR. Code is always isolated as LTR. Styling is added through VS Code's supported `markdown.previewStyles` and Markdown-it extension points.
+The extension inspects each rendered block. A block containing Persian or Arabic-script characters receives an explicit RTL direction; English-only blocks remain LTR. Code and SRT timestamps are always isolated as LTR. The editor uses VS Code's Custom Text Editor API, so changes participate in the normal document, save and undo lifecycle.
 
 ## Development
 
