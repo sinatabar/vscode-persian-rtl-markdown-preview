@@ -1,4 +1,5 @@
 const path = require("node:path");
+const os = require("node:os");
 const MarkdownIt = require("markdown-it");
 const sanitizeHtml = require("sanitize-html");
 const anchor = require("markdown-it-anchor");
@@ -293,6 +294,13 @@ class PersianRtlEditorProvider {
       }
 
       if (message.type === "exportHtml" && typeof message.html === "string") {
+        if (message.printAfterOpen) {
+          const target = vscode.Uri.file(path.join(os.tmpdir(), "persian-rtl-print-preview.html"));
+          vscode.workspace.fs.writeFile(target, Buffer.from(message.html, "utf8"))
+            .then(() => vscode.env.openExternal(target))
+            .catch((error) => vscode.window.showErrorMessage(`Print/PDF failed: ${error.message}`));
+          return;
+        }
         vscode.window.showSaveDialog({
           defaultUri: vscode.Uri.joinPath(documentDirectory, `${path.basename(document.fileName, path.extname(document.fileName))}.html`),
           filters: { HTML: ["html"] }

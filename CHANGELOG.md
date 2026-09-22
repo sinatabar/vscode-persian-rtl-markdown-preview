@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1 - 2026-09-22
+
+- Derive Mermaid node, text, border and arrow colors from the active VS Code theme for reliable contrast.
+- Detect the direction of every Mermaid label independently so Persian and mixed-language labels keep a readable order.
+- Keep mixed Persian/Latin Mermaid labels such as `پیش‌نمایش RTL` in the intended reading order.
+- Make Print/PDF open a standalone printable preview and trigger the system print dialog reliably.
+
 ## 1.2.0 - 2026-09-22
 
 - Render safe inline HTML in the custom Markdown preview instead of showing its source tags.
