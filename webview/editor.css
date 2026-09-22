@@ -3,6 +3,11 @@
   --border: var(--vscode-panel-border, var(--vscode-editorWidget-border));
   --muted: var(--vscode-descriptionForeground);
   --surface: var(--vscode-sideBar-background, var(--vscode-editor-background));
+  --user-font: PersianEditor;
+  --persian-scale: 100%;
+  --latin-scale: 100%;
+  --line-height: 1.9;
+  --content-width: 880px;
 }
 
 * { box-sizing: border-box; }
@@ -14,7 +19,7 @@ html, body {
   overflow: hidden;
   color: var(--vscode-editor-foreground);
   background: var(--vscode-editor-background);
-  font-family: PersianEditor, var(--vscode-font-family), sans-serif;
+  font-family: var(--user-font), PersianEditor, var(--vscode-font-family), sans-serif;
 }
 
 body { display: flex; flex-direction: column; }
@@ -30,7 +35,8 @@ body { display: flex; flex-direction: column; }
   background: var(--surface);
 }
 
-.tabs { display: flex; gap: 3px; }
+.tabs, .actions { display: flex; gap: 3px; align-items: center; flex-wrap: wrap; }
+.actions { justify-content: center; }
 
 button {
   padding: 5px 11px;
@@ -76,7 +82,7 @@ button.active {
   background: var(--vscode-editor-background);
   font-family: PersianEditor, var(--vscode-editor-font-family), monospace;
   font-size: var(--vscode-editor-font-size, 14px);
-  line-height: 1.9;
+  line-height: var(--line-height);
   text-align: start;
   unicode-bidi: plaintext;
   tab-size: 4;
@@ -85,11 +91,17 @@ button.active {
 .preview-pane { overflow: auto; background: var(--vscode-editor-background); }
 .preview-content {
   direction: rtl;
-  max-width: 880px;
+  max-width: var(--content-width);
   margin: 0 auto;
   padding: 28px clamp(20px, 5vw, 64px) 80px;
-  line-height: 1.9;
+  line-height: var(--line-height);
+  font-family: var(--user-font), PersianEditor, var(--vscode-font-family), sans-serif;
+  font-size: var(--persian-scale);
 }
+
+.preview-content[data-direction="rtl"] { direction: rtl; text-align: right; }
+.preview-content[data-direction="ltr"] { direction: ltr; text-align: left; }
+.preview-content .persian-ltr { font-size: var(--latin-scale); }
 
 .preview-content .rtl,
 .preview-content .persian-rtl { direction: rtl; text-align: right; unicode-bidi: isolate; }
@@ -125,6 +137,44 @@ button.active {
 .preview-content table { width: 100%; border-collapse: collapse; }
 .preview-content th, .preview-content td { padding: 6px 10px; border: 1px solid var(--border); }
 .preview-content a { color: var(--vscode-textLink-foreground); }
+.preview-content img { max-width: 100%; height: auto; }
+.preview-content .header-anchor { opacity: 0; margin-inline-end: .35em; text-decoration: none; }
+.preview-content h1:hover .header-anchor,
+.preview-content h2:hover .header-anchor,
+.preview-content h3:hover .header-anchor { opacity: .65; }
+.preview-content .task-list-item { list-style: none; }
+.preview-content .task-list-item input { margin-inline-end: .5em; }
+.preview-content .table-of-contents { padding: 14px 20px; border: 1px solid var(--border); border-radius: 7px; }
+.preview-content .mermaid { direction: ltr; text-align: center; overflow: auto; }
+.preview-content math {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  text-align: left;
+  font-family: "Cambria Math", "STIX Two Math", "STIXTwoMath-Regular", math, serif;
+}
+.preview-content eq,
+.preview-content eqn {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-size: var(--latin-scale);
+}
+.preview-content eq { display: inline-block; }
+.preview-content eqn { display: block; text-align: center; margin: .75em auto; }
+.preview-content .math-isolate,
+.preview-content .math-block-isolate {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  text-align: left;
+}
+.preview-content .math-isolate { display: inline-block; }
+.preview-content .math-block-isolate {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  text-align: center;
+}
+.preview-content .math-block-isolate math { margin-inline: auto; text-align: center; }
 .text-line { min-height: 1.9em; white-space: pre-wrap; }
 
 .cue {
@@ -145,10 +195,20 @@ button.active {
   font-size: 12px;
 }
 .cue-text { padding: 11px 14px; font-size: 16px; white-space: normal; }
+.cue-issues { padding: 6px 14px; color: var(--vscode-editorWarning-foreground, #cca700); border-top: 1px solid var(--border); font-size: 12px; }
 .empty { color: var(--muted); text-align: center; }
+
+@media print {
+  .toolbar, .editor-pane { display: none !important; }
+  html, body, .workspace, .preview-pane { overflow: visible; height: auto; background: white; color: black; }
+  .workspace { display: block; }
+  .preview-content { max-width: none; padding: 0; }
+}
 
 @media (max-width: 720px) {
   .mode-split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
   .mode-split .editor-pane { border-right: 0; border-bottom: 1px solid var(--border); }
   #status { display: none; }
+  .toolbar { align-items: flex-start; }
+  .actions button { padding: 4px 7px; font-size: 12px; }
 }
