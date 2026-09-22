@@ -145,7 +145,40 @@ button.active {
 .preview-content .task-list-item { list-style: none; }
 .preview-content .task-list-item input { margin-inline-end: .5em; }
 .preview-content .table-of-contents { padding: 14px 20px; border: 1px solid var(--border); border-radius: 7px; }
-.preview-content .mermaid { direction: ltr; text-align: center; overflow: auto; }
+.preview-content .mermaid {
+  direction: ltr;
+  text-align: center;
+  overflow: auto;
+  --mermaid-accent: var(--vscode-textLink-foreground, var(--vscode-focusBorder));
+  --mermaid-surface: var(--vscode-sideBar-background, var(--vscode-editor-background));
+}
+.preview-content .mermaid .flowchart-link,
+.preview-content .mermaid .edge-thickness-normal,
+.preview-content .mermaid .edge-thickness-thick {
+  stroke: var(--mermaid-accent) !important;
+  stroke-width: 2px !important;
+}
+.preview-content .mermaid marker path,
+.preview-content .mermaid .arrowheadPath {
+  fill: var(--mermaid-accent) !important;
+  stroke: var(--mermaid-accent) !important;
+}
+.preview-content .mermaid .node rect,
+.preview-content .mermaid .node circle,
+.preview-content .mermaid .node ellipse,
+.preview-content .mermaid .node polygon,
+.preview-content .mermaid .node path {
+  fill: var(--mermaid-surface) !important;
+  stroke: var(--mermaid-accent) !important;
+  stroke-width: 1.5px !important;
+}
+.preview-content .mermaid .nodeLabel,
+.preview-content .mermaid .edgeLabel,
+.preview-content .mermaid foreignObject div,
+.preview-content .mermaid text {
+  color: var(--vscode-editor-foreground) !important;
+  fill: var(--vscode-editor-foreground) !important;
+}
 .preview-content math {
   direction: ltr !important;
   unicode-bidi: isolate !important;

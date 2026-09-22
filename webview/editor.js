@@ -26,17 +26,98 @@
     editor.setRangeText(text, editor.selectionStart, editor.selectionEnd, "end");
     editor.focus(); updateStatus(); flushEdit();
   }
+  function themeColor(name, fallback) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+      || getComputedStyle(document.body).getPropertyValue(name).trim()
+      || fallback;
+  }
+  function mermaidAccent(background) {
+    const hex = background.match(/^#([\da-f]{6})$/i)?.[1];
+    const components = hex
+      ? [hex.slice(0, 2), hex.slice(2, 4), hex.slice(4, 6)].map((part) => parseInt(part, 16))
+      : (background.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    if (components.length < 3) return "#4daafc";
+    const [red, green, blue] = components;
+    const luminance = (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
+    return luminance < 0.5 ? "#4daafc" : "#006ab1";
+  }
+  function mermaidTheme() {
+    const background = themeColor("--vscode-editor-background", "#ffffff");
+    const foreground = themeColor("--vscode-editor-foreground", "#24292f");
+    const surface = themeColor("--vscode-sideBar-background", background);
+    const border = themeColor("--vscode-contrastBorder", themeColor("--vscode-panel-border", foreground));
+    const accent = mermaidAccent(background);
+    return {
+      background,
+      primaryColor: surface,
+      primaryTextColor: foreground,
+      primaryBorderColor: accent,
+      secondaryColor: surface,
+      secondaryTextColor: foreground,
+      secondaryBorderColor: border,
+      tertiaryColor: background,
+      tertiaryTextColor: foreground,
+      tertiaryBorderColor: border,
+      lineColor: accent,
+      textColor: foreground,
+      mainBkg: surface,
+      nodeBorder: accent,
+      clusterBkg: surface,
+      clusterBorder: border,
+      edgeLabelBackground: background,
+      fontFamily: "PersianEditor, sans-serif"
+    };
+  }
+  function fixMermaidLabels() {
+    const foreground = themeColor("--vscode-editor-foreground", "#24292f");
+    const background = themeColor("--vscode-editor-background", "#ffffff");
+    const surface = themeColor("--vscode-editorWidget-background", themeColor("--vscode-sideBar-background", background));
+    const accent = mermaidAccent(background);
+
+    preview.querySelectorAll(".mermaid .flowchart-link, .mermaid .edge-thickness-normal, .mermaid .edge-thickness-thick").forEach((edge) => {
+      edge.style.setProperty("stroke", accent, "important");
+      edge.style.setProperty("stroke-width", "2px", "important");
+    });
+    preview.querySelectorAll(".mermaid marker path, .mermaid .arrowheadPath").forEach((arrow) => {
+      arrow.style.setProperty("fill", accent, "important");
+      arrow.style.setProperty("stroke", accent, "important");
+    });
+    preview.querySelectorAll(".mermaid .node rect, .mermaid .node circle, .mermaid .node ellipse, .mermaid .node polygon, .mermaid .node path").forEach((shape) => {
+      shape.style.setProperty("fill", surface, "important");
+      shape.style.setProperty("stroke", accent, "important");
+      shape.style.setProperty("stroke-width", "1.5px", "important");
+    });
+    preview.querySelectorAll(".mermaid .nodeLabel, .mermaid .edgeLabel, .mermaid foreignObject div, .mermaid text").forEach((label) => {
+      const rtl = /[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff]/u.test(label.textContent || "");
+      label.setAttribute("dir", rtl ? "rtl" : "ltr");
+      label.style.direction = rtl ? "rtl" : "ltr";
+      label.style.unicodeBidi = "plaintext";
+      label.style.textAlign = "center";
+      label.style.setProperty("color", foreground, "important");
+      label.style.setProperty("fill", foreground, "important");
+    });
+  }
   async function renderMermaid() {
     if (!window.mermaid) return;
-    window.mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: document.body.classList.contains("vscode-light") ? "default" : "dark" });
-    try { await window.mermaid.run({ nodes: preview.querySelectorAll(".mermaid") }); } catch { /* invalid source stays visible */ }
+    window.mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "strict",
+      theme: "base",
+      themeVariables: mermaidTheme(),
+      flowchart: { htmlLabels: true }
+    });
+    try {
+      await window.mermaid.run({ nodes: preview.querySelectorAll(".mermaid") });
+      fixMermaidLabels();
+    } catch { /* invalid source stays visible */ }
   }
-  function exportHtml() {
+  function exportHtml(printAfterOpen = false) {
     const styles = Array.from(document.styleSheets).map((sheet) => {
       try { return Array.from(sheet.cssRules).map((rule) => rule.cssText).join("\n"); } catch { return ""; }
     }).join("\n");
-    const html = `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Export</title><style>${styles}</style></head><body><main class="preview-content ${currentFormat}">${preview.innerHTML}</main></body></html>`;
-    vscode.postMessage({ type: "exportHtml", html });
+    const printScript = printAfterOpen ? '<script>addEventListener("load",()=>setTimeout(()=>window.print(),250))<\/script>' : "";
+    const html = `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Persian RTL Preview</title><style>${styles}\n@media print{html,body{overflow:visible!important;height:auto!important}.preview-content{max-width:none!important;padding:0!important}}</style></head><body><main class="preview-content ${currentFormat}">${preview.innerHTML}</main>${printScript}</body></html>`;
+    vscode.postMessage({ type: "exportHtml", html, printAfterOpen });
   }
   function handleImage(file) {
     if (!file || !file.type.startsWith("image/")) return false;
@@ -63,7 +144,7 @@
     if (["normalizePersian", "normalizeHalfSpaces", "toPersianDigits", "toLatinDigits"].includes(action)) vscode.postMessage({ type: "transform", action });
     else if (action === "convert") vscode.postMessage({ type: "convertSubtitle", target: currentFormat === "vtt" ? "srt" : "vtt" });
     else if (action === "export") exportHtml();
-    else if (action === "print") window.print();
+    else if (action === "print") exportHtml(true);
   }));
   document.addEventListener("keydown", (event) => {
     if (!(event.metaKey || event.ctrlKey) || !event.shiftKey || !["1", "2", "3"].includes(event.key)) return;

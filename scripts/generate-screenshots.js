@@ -46,7 +46,7 @@ const diagram = renderDocument("markdown", `## گردش کار دیداری
 flowchart LR
   A[متن فارسی] --> B[ویرایش]
   B --> C[پیش‌نمایش RTL]
-  C --> D[HTML یا PDF]
+  C --> D[خروجی وب یا سند]
 \`\`\``);
 
 const themes = {
@@ -76,7 +76,7 @@ html,body{width:1060px;height:567px}.toolbar{height:48px;padding:7px 20px}.toolb
 <header class="toolbar"><strong class="toolbar-brand">Persian RTL Editor</strong><div class="actions"><button>ویرایش</button><button>دو بخشی</button><button class="active">پیش‌نمایش</button><button>اصلاح فارسی</button><button>نیم‌فاصله</button><button>HTML</button><button>چاپ/PDF</button></div><span id="status">فارسی · English · RTL/LTR</span></header>
 <main class="workspace mode-preview"><section class="preview-pane"><div class="preview-content markdown">
 <div class="showcase-hero">${hero}</div><div class="showcase-grid"><section class="showcase-card">${features}</section><section class="showcase-card">${math}</section><section class="showcase-card wide">${diagram}</section></div>
-</div></section></main><script>${mermaid}</script><script>mermaid.initialize({startOnLoad:false,theme:${JSON.stringify(name === "dark" ? "dark" : "default")},securityLevel:"strict",fontFamily:"PersianEditor, sans-serif",themeVariables:{fontSize:"17px"}});mermaid.run({querySelector:".mermaid"}).then(()=>document.body.dataset.ready="true");</script></body></html>`;
+</div></section></main><script>${mermaid}</script><script>const c=${JSON.stringify(colors)};mermaid.initialize({startOnLoad:false,theme:"base",securityLevel:"strict",flowchart:{htmlLabels:true},themeVariables:{background:c.editor,primaryColor:c.surface,primaryTextColor:c.foreground,primaryBorderColor:c.link,secondaryColor:c.surface,secondaryTextColor:c.foreground,secondaryBorderColor:c.border,tertiaryColor:c.editor,tertiaryTextColor:c.foreground,tertiaryBorderColor:c.border,lineColor:c.link,textColor:c.foreground,mainBkg:c.surface,nodeBorder:c.link,clusterBkg:c.surface,clusterBorder:c.border,edgeLabelBackground:c.editor,fontFamily:"PersianEditor, sans-serif",fontSize:"17px"}});mermaid.run({querySelector:".mermaid"}).then(()=>{document.querySelectorAll(".mermaid .nodeLabel,.mermaid .edgeLabel,.mermaid foreignObject div,.mermaid text").forEach(e=>{const rtl=/[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff]/u.test(e.textContent||"");e.setAttribute("dir",rtl?"rtl":"ltr");e.style.direction=rtl?"rtl":"ltr";e.style.unicodeBidi="plaintext";e.style.textAlign="center"});document.body.dataset.ready="true"});</script></body></html>`;
     const htmlPath = path.join(tempDirectory, `${name}.html`);
     const outputPath = path.join(root, "images", `preview-${name}.png`);
     fs.writeFileSync(htmlPath, html);
