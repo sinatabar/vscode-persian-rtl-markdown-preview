@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0
+
+- Add an optional Persian RTL custom editor for Markdown, TXT and SRT files.
+- Add edit, split and preview modes with direct file editing and VS Code Save/Undo integration.
+- Add structured SRT preview with isolated LTR timestamps and RTL/LTR dialogue detection.
+- Keep the existing built-in Markdown Preview integration unchanged.
+
 ## 1.0.2
 
 - Separate Persian and English Marketplace details to prevent bidirectional layout issues.
