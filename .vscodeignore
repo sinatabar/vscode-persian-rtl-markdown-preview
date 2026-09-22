@@ -1,7 +1,13 @@
 .git/**
-.gitignore
 .github/**
+node_modules/**
+scripts/**
 test/**
 demo/**
-PUBLISHING.md
 *.vsix
+extension.js
+custom-editor.js
+direction.js
+markdown-direction.js
+subtitles.js
+persian-tools.js

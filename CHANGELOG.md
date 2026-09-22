@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.0 - 2026-09-22
+
+- Render safe inline HTML in the custom Markdown preview instead of showing its source tags.
+- Resolve local relative images through the VS Code webview resource system.
+- Allow HTTPS and data images while continuing to remove scripts, event handlers and unsafe URLs.
+- Add WebVTT, ASS/SSA and additional Markdown filename support.
+- Add subtitle validation, overlap warnings, cue statistics and SRT/WebVTT conversion.
+- Add configurable direction, font sizes, line height, content width and default view mode.
+- Add synchronized scrolling, remembered view mode, keyboard shortcuts and reading statistics.
+- Add task lists, footnotes, heading anchors, table of contents, native textual MathML powered by Temml, and Mermaid diagrams.
+- Isolate inline and block equations from surrounding RTL text so superscripts, subscripts and fractions keep their mathematical order.
+- Add Persian normalization, half-space and Persian/Latin digit tools.
+- Add pasted or dropped image saving, standalone HTML export and print/PDF output.
+- Bundle runtime dependencies to reduce the packaged extension from hundreds of files to a compact distribution.
+
 ## 1.1.0
 
 - Add an optional Persian RTL custom editor for Markdown, TXT and SRT files.

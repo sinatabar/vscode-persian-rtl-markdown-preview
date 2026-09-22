@@ -1,8 +1,8 @@
 {
   "name": "persian-rtl-markdown-preview",
   "displayName": "Persian RTL Markdown Preview",
-  "description": "Edit and preview Persian/Farsi Markdown, TXT and SRT with correct RTL and mixed-language layout.",
-  "version": "1.1.0",
+  "description": "Edit and preview Persian/Farsi Markdown, text and subtitles with correct RTL, rich Markdown and bilingual tools.",
+  "version": "1.2.0",
   "publisher": "sinatabar",
   "author": {
     "name": "Sina Tabar",
@@ -18,7 +18,7 @@
     "url": "https://github.com/sinatabar/vscode-persian-rtl-markdown-preview/issues"
   },
   "homepage": "https://github.com/sinatabar/vscode-persian-rtl-markdown-preview#readme",
-  "main": "./extension.js",
+  "main": "./dist/extension.js",
   "activationEvents": [
     "onLanguage:markdown",
     "onCustomEditor:persianRtl.editor",
@@ -63,7 +63,7 @@
       "editor/title/context": [
         {
           "command": "persianRtl.openEditor",
-          "when": "resourceExtname == .md || resourceExtname == .markdown || resourceExtname == .txt || resourceExtname == .srt",
+          "when": "resourceExtname == .md || resourceExtname == .markdown || resourceExtname == .mdown || resourceExtname == .mkd || resourceExtname == .txt || resourceExtname == .srt || resourceExtname == .vtt || resourceExtname == .ass || resourceExtname == .ssa",
           "group": "navigation"
         }
       ]
@@ -73,10 +73,33 @@
         "viewType": "persianRtl.editor",
         "displayName": "Persian RTL Editor",
         "selector": [
-          { "filenamePattern": "*.md" },
-          { "filenamePattern": "*.markdown" },
-          { "filenamePattern": "*.txt" },
-          { "filenamePattern": "*.srt" }
+          {
+            "filenamePattern": "*.md"
+          },
+          {
+            "filenamePattern": "*.markdown"
+          },
+          {
+            "filenamePattern": "*.txt"
+          },
+          {
+            "filenamePattern": "*.srt"
+          },
+          {
+            "filenamePattern": "*.vtt"
+          },
+          {
+            "filenamePattern": "*.ass"
+          },
+          {
+            "filenamePattern": "*.ssa"
+          },
+          {
+            "filenamePattern": "*.mdown"
+          },
+          {
+            "filenamePattern": "*.mkd"
+          }
         ],
         "priority": "option"
       }
@@ -84,17 +107,86 @@
     "markdown.previewStyles": [
       "./preview.css"
     ],
-    "markdown.markdownItPlugins": true
+    "markdown.markdownItPlugins": true,
+    "configuration": {
+      "title": "Persian RTL Editor",
+      "properties": {
+        "persianRtl.direction": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "rtl",
+            "ltr"
+          ],
+          "default": "auto",
+          "description": "Base direction for the custom editor and preview."
+        },
+        "persianRtl.fontFamily": {
+          "type": "string",
+          "default": "PersianEditor",
+          "description": "Font family used for Persian content."
+        },
+        "persianRtl.persianFontSize": {
+          "type": "number",
+          "minimum": 70,
+          "maximum": 200,
+          "default": 100,
+          "description": "Persian text size as a percentage."
+        },
+        "persianRtl.latinFontSize": {
+          "type": "number",
+          "minimum": 70,
+          "maximum": 200,
+          "default": 100,
+          "description": "Latin text size as a percentage."
+        },
+        "persianRtl.lineHeight": {
+          "type": "number",
+          "minimum": 1.2,
+          "maximum": 3,
+          "default": 1.9,
+          "description": "Line height used by the custom editor."
+        },
+        "persianRtl.contentWidth": {
+          "type": "number",
+          "minimum": 480,
+          "maximum": 1600,
+          "default": 880,
+          "description": "Maximum preview width in pixels."
+        },
+        "persianRtl.defaultMode": {
+          "type": "string",
+          "enum": [
+            "edit",
+            "split",
+            "preview"
+          ],
+          "default": "split",
+          "description": "Default view mode for newly opened custom editors."
+        }
+      }
+    }
   },
   "scripts": {
     "test": "node --test test/*.test.js",
-    "package": "vsce package",
+    "build": "node scripts/build.js",
+    "screenshots": "node scripts/generate-screenshots.js",
+    "package": "npm run build && vsce package",
     "publish": "vsce publish"
   },
   "dependencies": {
-    "markdown-it": "^14.1.0"
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^10.0.0",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "markdown-it-texmath": "^1.0.0",
+    "markdown-it-toc-done-right": "^4.2.0",
+    "mermaid": "11.17.2",
+    "sanitize-html": "^2.17.7",
+    "temml": "^0.13.5"
   },
   "devDependencies": {
-    "@vscode/vsce": "^3.6.2"
+    "@vscode/vsce": "^3.6.2",
+    "esbuild": "^0.28.2"
   }
 }
