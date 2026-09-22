@@ -35,6 +35,9 @@ test("Mermaid labels get per-label bidi direction for mixed Persian and Latin te
 test("Print/PDF opens a generated printable HTML document outside the webview", () => {
   assert.match(script, /exportHtml\(true\)/);
   assert.match(script, /window\.print\(\)/);
+  assert.match(script, /#f6f8fa/);
+  assert.match(script, /#1f2328/);
+  assert.match(script, /background:#fff!important/);
   assert.match(provider, /message\.printAfterOpen/);
   assert.match(provider, /vscode\.env\.openExternal\(target\)/);
 });

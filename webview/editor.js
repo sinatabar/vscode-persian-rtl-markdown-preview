@@ -115,8 +115,29 @@
     const styles = Array.from(document.styleSheets).map((sheet) => {
       try { return Array.from(sheet.cssRules).map((rule) => rule.cssText).join("\n"); } catch { return ""; }
     }).join("\n");
+    const exportedPreview = preview.cloneNode(true);
+    if (printAfterOpen) {
+      exportedPreview.style.setProperty("background", "#ffffff", "important");
+      exportedPreview.style.setProperty("color", "#1f2328", "important");
+      exportedPreview.querySelectorAll(".mermaid .flowchart-link, .mermaid .edge-thickness-normal, .mermaid .edge-thickness-thick").forEach((edge) => {
+        edge.style.setProperty("stroke", "#0969da", "important");
+      });
+      exportedPreview.querySelectorAll(".mermaid marker path, .mermaid .arrowheadPath").forEach((arrow) => {
+        arrow.style.setProperty("fill", "#0969da", "important");
+        arrow.style.setProperty("stroke", "#0969da", "important");
+      });
+      exportedPreview.querySelectorAll(".mermaid .node rect, .mermaid .node circle, .mermaid .node ellipse, .mermaid .node polygon, .mermaid .node path").forEach((shape) => {
+        shape.style.setProperty("fill", "#f6f8fa", "important");
+        shape.style.setProperty("stroke", "#0969da", "important");
+      });
+      exportedPreview.querySelectorAll(".mermaid .nodeLabel, .mermaid .edgeLabel, .mermaid foreignObject div, .mermaid text").forEach((label) => {
+        label.style.setProperty("color", "#1f2328", "important");
+        label.style.setProperty("fill", "#1f2328", "important");
+      });
+    }
     const printScript = printAfterOpen ? '<script>addEventListener("load",()=>setTimeout(()=>window.print(),250))<\/script>' : "";
-    const html = `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Persian RTL Preview</title><style>${styles}\n@media print{html,body{overflow:visible!important;height:auto!important}.preview-content{max-width:none!important;padding:0!important}}</style></head><body><main class="preview-content ${currentFormat}">${preview.innerHTML}</main>${printScript}</body></html>`;
+    const printStyles = printAfterOpen ? "html,body{background:#fff!important;color:#1f2328!important} .preview-content{background:#fff!important;color:#1f2328!important}" : "";
+    const html = `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Persian RTL Preview</title><style>${styles}\n${printStyles}\n@media print{html,body{overflow:visible!important;height:auto!important;background:#fff!important;color:#1f2328!important}.preview-content{max-width:none!important;padding:0!important;background:#fff!important;color:#1f2328!important}}</style></head><body><main class="preview-content ${currentFormat}">${exportedPreview.innerHTML}</main>${printScript}</body></html>`;
     vscode.postMessage({ type: "exportHtml", html, printAfterOpen });
   }
   function handleImage(file) {
